@@ -48,6 +48,7 @@ class team_editor : AppCompatActivity() , teamDetailOnClickListener{
 
 
 
+
         val fab : View = findViewById(R.id.fab_new_pokemon)
         fab.setOnClickListener(){
             val ref = database.child(auth.currentUser!!.uid)
@@ -113,9 +114,37 @@ class team_editor : AppCompatActivity() , teamDetailOnClickListener{
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Error",error.toString())
             }
-        })}
+        })
+        save_team_btn.setOnClickListener(){
+            var members = mutableListOf<PokemonDataRegion>()
+            adapter.pokemons.forEach {
+                val poke  = PokemonDataRegion(it.name)
+                members.add(poke)
+            }
+            var teamname = team_editor_name.getText().toString()
+            var update_team = team(teamname,regionName,members,teamid)
+            ref.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = snapshot.getValue(User::class.java)
+                    user?.teams?.forEach{
+                        if(it.teamID==update_team.teamID){
+                            it.apply { it.members = update_team.members
+                                it.name = update_team.name
+                        }
+                    }
+                }
+                    ref.setValue(user)
+                    finish()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+    }
 
     override fun onItemClicked(poke: Pokemon) {
-        TODO("Not yet implemented")
+        
     }
 }

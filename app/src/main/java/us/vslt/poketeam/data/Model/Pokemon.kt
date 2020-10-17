@@ -9,12 +9,12 @@ import com.squareup.moshi.Json
 data class Pokemon(
 
     @field:Json(name = "name")
-    val name : String,
+    var name : String,
     @field:Json(name = "id")
-    val id : Int,
+    var id : Int,
     @field:Json(name= "sprites")
     @TypeConverters(SpriteConverter::class)
-    val sprites : Sprites,
+    var sprites : Sprites,
     @PrimaryKey
     var uuid : String
 

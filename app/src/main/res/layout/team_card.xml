@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="@color/colorAccent"
         android:orientation="horizontal">
 
@@ -29,15 +29,18 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="-8dp"
-            android:layout_marginLeft="-8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginBottom="29dp"
+            android:fontFamily="@font/open_sans_extrabold"
             android:gravity="center_horizontal"
             android:text="@string/team_name"
-            android:textSize="30sp" />
+            android:textColor="@android:color/white"
+            android:textFontWeight="800"
+            android:textSize="40sp" />
 
     </RelativeLayout>
 

@@ -36,22 +36,14 @@
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@android:color/white"
+            android:fontFamily="@font/open_sans_extrabold"
             android:textSize="25dp"/>
-
-        <TextView
-            android:id="@+id/poke_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:text="@string/default_type"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/poke_name"
-            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/poke_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_light"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"

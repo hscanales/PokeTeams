@@ -50,6 +50,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="fontFamily">@font/open_sans_extrabold</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">

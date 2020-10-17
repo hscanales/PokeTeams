@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.team_editor"></activity>
+        <activity android:name=".UI.change_pokemon"></activity>
+        <activity android:name=".UI.team_editor" />
         <activity
             android:name=".UI.team_manager"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegionesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -29,6 +30,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -5,51 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="start">
-
     <!-- Main Activity -->
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main_activity_content_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         tools:context=".MainActivity">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/activity_main_appbarlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:weightSum="1"
-                app:contentInsetStart="0dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-
-
-                <TextView
-                    android:id="@+id/activity_main_toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:ellipsize="marquee"
-                    android:fadingEdge="horizontal"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
             android:id="@+id/activity_main_content_id"
@@ -58,8 +21,41 @@
             android:background="@android:color/white"
             android:clipToPadding="false"
             android:orientation="vertical">
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/activity_main_appbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:weightSum="1"
+                    app:contentInsetStart="0dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
+
+                    <TextView
+                        android:id="@+id/activity_main_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="marquee"
+                        android:fadingEdge="horizontal"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
 
             <TextView
                 android:id="@+id/textView"
@@ -72,20 +68,27 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/team_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible" />
+                android:layout_height="match_parent"
+                android:visibility="visible" android:layout_weight="9" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/submit"
-                app:srcCompat="@drawable/ic_add"/>
+
         </LinearLayout>
 
-    </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/submit"
+            app:srcCompat="@drawable/ic_add"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@color/colorAccent"
+
+            app:borderWidth="0dp"/>
+
+    </FrameLayout>
     <!-- Main Activity End -->
 
 
@@ -135,5 +138,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -31,6 +31,8 @@
     <string name="default_type">default_type</string>
     <string name="default_number">default_number</string>
     <string name="submit">submit</string>
+    <string name="delete">delete</string>
+    <string name="delete_team">Delete Team</string>
 
 
 </resources>

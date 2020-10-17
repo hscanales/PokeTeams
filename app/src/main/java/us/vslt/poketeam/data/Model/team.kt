@@ -6,10 +6,10 @@ import java.util.ArrayList
 
 @IgnoreExtraProperties
 data class team(
-    val name : String? = null,
-    val region_name : String? = null,
-    val members : MutableList<PokemonDataRegion>? = null,
-    val teamID : String? = null
+    var name : String? = null,
+    var region_name : String? = null,
+    var members : MutableList<PokemonDataRegion>? = null,
+    var teamID : String? = null
 ){
     constructor() : this("","",null,"")
     @Exclude
@@ -25,8 +25,8 @@ data class team(
 
 @IgnoreExtraProperties
 data class User(
-    val id : String? = null,
-    val teams : MutableList<team>? = null
+    var id : String? = null,
+    var teams : MutableList<team>? = null
 ){
     constructor() : this("",null)
     @Exclude

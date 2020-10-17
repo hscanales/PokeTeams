@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 @Entity(tableName = "poke_region")
-
 data class PokemonDataRegion(
     @PrimaryKey
     @field:Json(name="name")
@@ -19,7 +18,6 @@ data class Pokemon_Entry(
 
 
 data class  Pokedex(
-
     @field:Json(name="id")
     val id: Int,
     @field:Json(name="name")
