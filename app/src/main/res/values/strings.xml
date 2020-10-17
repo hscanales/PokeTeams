@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">PokeTeams</string>
+
+    <string name="label_google_sign_in">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+
+
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="send_link">Send Link</string>
+    <string name="sign_out">Sign Out</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="facebook_status_fmt">Facebook User: %s</string>
+    <string name="facebook_title_text">Facebook Login</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="Region_Name">Region_Name</string>
+    <string name="developed_by_hector_canales">Developed by Hector Canales</string>
+    <string name="sign_out_button">Sign Out</string>
+    <string name="region_icon">Region Icon</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="team_name">Team Name</string>
+    <string name="default_name">default_name</string>
+    <string name="default_type">default_type</string>
+    <string name="default_number">default_number</string>
+
+
+</resources>
