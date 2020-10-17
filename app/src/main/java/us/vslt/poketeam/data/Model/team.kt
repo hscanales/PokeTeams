@@ -2,12 +2,13 @@ package us.vslt.poketeam.data.Model
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
+import java.util.ArrayList
 
 @IgnoreExtraProperties
 data class team(
     val name : String? = null,
     val region_name : String? = null,
-    val members : List<PokemonDataRegion>? = null,
+    val members : MutableList<PokemonDataRegion>? = null,
     val teamID : String? = null
 ){
     constructor() : this("","",null,"")
@@ -25,7 +26,7 @@ data class team(
 @IgnoreExtraProperties
 data class User(
     val id : String? = null,
-    val teams : List<team>? = null
+    val teams : MutableList<team>? = null
 ){
     constructor() : this("",null)
     @Exclude

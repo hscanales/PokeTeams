@@ -1,6 +1,7 @@
 package us.vslt.poketeam.UI
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,9 +20,11 @@ import kotlinx.android.synthetic.main.activity_team_manager.*
 import us.vslt.poketeam.R
 import us.vslt.poketeam.adapters.teamAdapter
 import us.vslt.poketeam.adapters.teamOnClickListener
+import us.vslt.poketeam.data.Model.PokemonDataRegion
 import us.vslt.poketeam.data.Model.User
 import us.vslt.poketeam.data.Model.team
 import us.vslt.poketeam.data.ViewModel.teamViewModel
+import kotlin.random.Random
 
 
 class team_manager : AppCompatActivity(), teamOnClickListener {
@@ -47,6 +50,55 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
 
     fun binder(region_name: String?) {
+        val fab : View = findViewById(R.id.fab)
+        fab.setOnClickListener(){
+            val ref = database.child(auth.currentUser!!.uid)
+            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                        var user = snapshot.getValue(User::class.java)
+
+                    if(user==null){
+                        val newTeam = team(
+                            "New Team",
+                            region_name,
+                            arrayListOf(
+                                PokemonDataRegion("ditto"),
+                                PokemonDataRegion("ditto"),
+                                PokemonDataRegion("ditto")
+                            ),
+                            java.util.UUID.randomUUID().toString()
+                        )
+                        val lista = mutableListOf<team>(newTeam)
+                        user = User(auth.currentUser!!.uid,lista)
+                        database.child(auth.currentUser!!.uid).setValue(user)
+
+                    }else {
+                        val newTeam = team(
+                            "New Team",
+                            region_name,
+                            arrayListOf(
+                                PokemonDataRegion("ditto"),
+                                PokemonDataRegion("ditto"),
+                                PokemonDataRegion("ditto")
+                            ),
+                            java.util.UUID.randomUUID().toString()
+                        )
+                        user?.teams?.add(newTeam)
+                        database.child(auth.currentUser!!.uid).setValue(user)
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
+
+
         val ref = database.child(auth.currentUser!!.uid)
         var teams = ArrayList<team>()
         team_recycler?.layoutManager = LinearLayoutManager(this)
@@ -54,8 +106,10 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val user = snapshot.getValue(User::class.java)
+                    var ids = ArrayList<String>()
                     teams.clear()
                     user?.teams?.forEach {
+                        ids.add(it.teamID.toString())
                         if (it.region_name.toString() == region_name)
                             teams.add(it)
                     }
@@ -66,6 +120,8 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
                 }
             }
+
+
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -124,7 +180,13 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
     }
 
+
     override fun onItemClicked(team: team) {
+        val intent = Intent(this,team_editor::class.java)
+        intent.putExtra("regionName",team.region_name)
+        intent.putExtra("teamID",team.teamID)
+        intent.putExtra("teamName",team.name)
+        startActivity(intent)
 
     }
 

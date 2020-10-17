@@ -8,6 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.Response
 import retrofit2.http.Path
+import us.vslt.poketeam.data.Model.Pokemon
 import us.vslt.poketeam.data.Model.regionExtended
 import us.vslt.poketeam.data.Model.regionResponse
 
@@ -20,6 +21,9 @@ interface retrofit {
 
     @GET("region/{name}")
     fun getRegionByName(@Path("name") name : String): Deferred<Response<regionExtended>>
+
+    @GET("pokemon/{name}")
+    fun getPokemonByName(@Path("name") name: String) : Deferred<Response<Pokemon>>
 
 
     companion object {

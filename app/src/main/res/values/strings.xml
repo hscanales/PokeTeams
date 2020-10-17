@@ -30,6 +30,7 @@
     <string name="default_name">default_name</string>
     <string name="default_type">default_type</string>
     <string name="default_number">default_number</string>
+    <string name="submit">submit</string>
 
 
 </resources>
