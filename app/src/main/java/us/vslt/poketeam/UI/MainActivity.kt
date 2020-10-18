@@ -5,16 +5,15 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +24,7 @@ import us.vslt.poketeam.RegionesActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var  auth : FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     val RC_SIGN_IN: Int = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
@@ -65,8 +64,9 @@ class MainActivity : AppCompatActivity() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
-    private fun ui(){
-        signInButton.setOnClickListener{
+
+    private fun ui() {
+        signInButton.setOnClickListener {
             signIn()
         }
     }
@@ -76,12 +76,13 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 startActivity(RegionesActivity.getLaunchIntent(this))
-                Toast.makeText(this,"Google sign in complete :) ",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Google sign in complete :) ", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -93,14 +94,14 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onStart() {
         super.onStart()
-        if(isOnline(this.applicationContext)) {
+        if (isOnline(this.applicationContext)) {
             var user = FirebaseAuth.getInstance().currentUser
             if (user != null) {
                 startActivity(RegionesActivity.getLaunchIntent(this))
                 finish()
             }
-        }else{
-            Toast.makeText(this,"No Internet Connection, Try Connecting",Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "No Internet Connection, Try Connecting", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -118,7 +119,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun getLaunchIntent(from: Context ) = Intent(from, MainActivity::class.java).apply {
+        fun getLaunchIntent(from: Context) = Intent(from, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }

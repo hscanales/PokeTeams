@@ -11,11 +11,11 @@ import us.vslt.poketeam.data.Model.region
 
 
 @Dao
-interface regionDAO{
+interface regionDAO {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(region:region)
+    suspend fun insert(region: region)
 
     @Query("SELECT * FROM region")
     fun getAll(): LiveData<List<region>>
@@ -24,10 +24,10 @@ interface regionDAO{
     suspend fun nuke()
 
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
-    suspend fun insertPokemonRegion(data : PokemonDataRegion)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPokemonRegion(data: PokemonDataRegion)
 
-    @Query ( "DELETE FROM poke_region")
+    @Query("DELETE FROM poke_region")
     suspend fun nukePokemons()
 
 }

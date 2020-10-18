@@ -1,6 +1,9 @@
 package us.vslt.poketeam.data.Model
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.Json
@@ -9,29 +12,29 @@ import com.squareup.moshi.Json
 data class Pokemon(
 
     @field:Json(name = "name")
-    var name : String,
+    var name: String,
     @field:Json(name = "id")
-    var id : Int,
-    @field:Json(name= "sprites")
+    var id: Int,
+    @field:Json(name = "sprites")
     @TypeConverters(SpriteConverter::class)
-    var sprites : Sprites,
+    var sprites: Sprites,
     @PrimaryKey
-    var uuid : String
+    var uuid: String
 
 
-){
+) {
 
-    constructor() : this("",-1,Sprites(),""){
+    constructor() : this("", -1, Sprites(), "") {
         this.uuid = java.util.UUID.randomUUID().toString()
     }
 
-    fun toMap() : Map<String,Any?>{
+    fun toMap(): Map<String, Any?> {
         return mapOf(
             "name" to name,
             "id" to id,
             "sprites" to sprites,
 
-        )
+            )
 
     }
 }
@@ -40,23 +43,23 @@ data class Pokemon(
 data class Pokemon_Regional(
 
     @field:Json(name = "name")
-    var name : String,
+    var name: String,
     @field:Json(name = "id")
     @PrimaryKey
-    var id : Int,
-    @field:Json(name= "sprites")
+    var id: Int,
+    @field:Json(name = "sprites")
     @TypeConverters(SpriteConverter::class)
-    var sprites : Sprites,
-    var uuid : String
+    var sprites: Sprites,
+    var uuid: String
 
 
-){
+) {
 
-    constructor() : this("",-1,Sprites(),""){
+    constructor() : this("", -1, Sprites(), "") {
         this.uuid = java.util.UUID.randomUUID().toString()
     }
 
-    fun toMap() : Map<String,Any?>{
+    fun toMap(): Map<String, Any?> {
         return mapOf(
             "name" to name,
             "id" to id,
@@ -68,36 +71,39 @@ data class Pokemon_Regional(
 }
 
 data class pokeTypes(
-    @field:Json(name="type")
+    @field:Json(name = "type")
     @TypeConverters(pokeTypeConverter::class)
     val type: pokeType
-){
+) {
     constructor() : this(pokeType())
 
-    fun toMap() : Map<String,Any?>{
+    fun toMap(): Map<String, Any?> {
         return mapOf(
             "type" to type
         )
     }
 }
-data class pokeType (
-    @field:Json(name="name")
+
+data class pokeType(
+    @field:Json(name = "name")
     val name: String
-){
+) {
     constructor() : this("")
-    fun toMap(): Map<String,Any?>{
-        return  mapOf(
+
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
             "name" to name
         )
     }
 }
 
 data class Sprites(
-    @field:Json(name= "front_default")
-    val front_default : String
-){
+    @field:Json(name = "front_default")
+    val front_default: String
+) {
     constructor() : this("")
-    fun toMap() : Map<String,Any>{
+
+    fun toMap(): Map<String, Any> {
         return mapOf(
             "front_default" to front_default
         )
@@ -105,63 +111,66 @@ data class Sprites(
 }
 
 
-
-class SpriteConverter{
+class SpriteConverter {
     private val gson = Gson()
+
     @TypeConverter
-    fun stringToSprite(data : String?): Sprites{
-        if(data==null){
+    fun stringToSprite(data: String?): Sprites {
+        if (data == null) {
             return Sprites()
         }
-        val spriteType = object : TypeToken<Sprites>(){}.type
+        val spriteType = object : TypeToken<Sprites>() {}.type
 
-        return gson.fromJson<Sprites>(data,spriteType)
+        return gson.fromJson<Sprites>(data, spriteType)
 
 
     }
+
     @TypeConverter
-    fun spriteToString(aux : Sprites) : String{
+    fun spriteToString(aux: Sprites): String {
         return gson.toJson(aux)
     }
 }
 
-class pokeTypesConverter{
+class pokeTypesConverter {
     private val gson = Gson()
+
     @TypeConverter
-    fun stringTopokeType(data : String?): ArrayList<pokeTypes> {
-        if(data==null){
+    fun stringTopokeType(data: String?): ArrayList<pokeTypes> {
+        if (data == null) {
             return arrayListOf()
         }
-        val pokeTypesType = object : TypeToken<ArrayList<pokeTypes>>(){
+        val pokeTypesType = object : TypeToken<ArrayList<pokeTypes>>() {
         }.type
 
-        return gson.fromJson<ArrayList<pokeTypes>>(data,pokeTypesType)
+        return gson.fromJson<ArrayList<pokeTypes>>(data, pokeTypesType)
     }
 
 
     @TypeConverter
-    fun pokeTypesToString(aux : ArrayList<pokeTypes>) : String{
+    fun pokeTypesToString(aux: ArrayList<pokeTypes>): String {
         return gson.toJson(aux)
     }
 }
 
-class pokeTypeConverter{
+class pokeTypeConverter {
     private val gson = Gson()
+
     @TypeConverter
-    fun stringTopokeType(data : String?): pokeType{
-        if(data==null){
+    fun stringTopokeType(data: String?): pokeType {
+        if (data == null) {
             return pokeType()
         }
         val pokeTypesType = object : TypeToken<pokeType>() {
 
         }.type
 
-        return gson.fromJson<pokeType>(data,pokeTypesType)
+        return gson.fromJson<pokeType>(data, pokeTypesType)
     }
 
 
     @TypeConverter
-    fun pokeTypesToString(aux : pokeType) : String{
+    fun pokeTypesToString(aux: pokeType): String {
         return gson.toJson(aux)
     }
 }

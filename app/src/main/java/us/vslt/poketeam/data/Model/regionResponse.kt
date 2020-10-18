@@ -7,16 +7,14 @@ import com.squareup.moshi.Json
 @Entity(tableName = "region")
 data class region(
     @PrimaryKey
-    @field:Json(name="name")
-    val region_name : String,
-    @field:Json(name="url")
-    val download_url : String
-
-
+    @field:Json(name = "name")
+    val region_name: String,
+    @field:Json(name = "url")
+    val download_url: String
 )
 
 data class regionResponse(
-    @field:Json(name="results")
-    val lista : List<region>
+    @field:Json(name = "results")
+    val lista: List<region>
 
 )

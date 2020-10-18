@@ -3,7 +3,6 @@ package us.vslt.poketeam.UI
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,7 +23,6 @@ import us.vslt.poketeam.data.Model.PokemonDataRegion
 import us.vslt.poketeam.data.Model.User
 import us.vslt.poketeam.data.Model.team
 import us.vslt.poketeam.data.ViewModel.teamViewModel
-import kotlin.random.Random
 
 
 class team_manager : AppCompatActivity(), teamOnClickListener {
@@ -50,15 +48,15 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
 
     fun binder(region_name: String?) {
-        val fab : View = findViewById(R.id.fab)
-        fab.setOnClickListener(){
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener {
             val ref = database.child(auth.currentUser!!.uid)
-            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                        var user = snapshot.getValue(User::class.java)
+                    var user = snapshot.getValue(User::class.java)
 
-                    if(user==null){
+                    if (user == null) {
                         val newTeam = team(
                             "New Team",
                             region_name,
@@ -70,10 +68,10 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                             java.util.UUID.randomUUID().toString(), true
                         )
                         val lista = mutableListOf<team>(newTeam)
-                        user = User(auth.currentUser!!.uid,lista)
+                        user = User(auth.currentUser!!.uid, lista)
                         database.child(auth.currentUser!!.uid).setValue(user)
 
-                    }else {
+                    } else {
                         val newTeam = team(
                             "New Team",
                             region_name,
@@ -82,9 +80,9 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                                 PokemonDataRegion("ditto"),
                                 PokemonDataRegion("ditto")
                             ),
-                            java.util.UUID.randomUUID().toString(),true
+                            java.util.UUID.randomUUID().toString(), true
                         )
-                        user?.teams?.add(newTeam)
+                        user.teams?.add(newTeam)
                         database.child(auth.currentUser!!.uid).setValue(user)
                     }
 
@@ -98,7 +96,6 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
         }
 
 
-
         val ref = database.child(auth.currentUser!!.uid)
         var teams = ArrayList<team>()
         team_recycler?.layoutManager = LinearLayoutManager(this)
@@ -110,8 +107,9 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                     teams.clear()
                     user?.teams?.forEach {
                         if (it.region_name.toString() == region_name) {
-                            if(it.active!!){
-                                teams.add(it)}
+                            if (it.active!!) {
+                                teams.add(it)
+                            }
                         }
                     }
                     adapter = teamAdapter(teams, this@team_manager)
@@ -121,7 +119,6 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
                 }
             }
-
 
 
             override fun onCancelled(error: DatabaseError) {
@@ -183,10 +180,10 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
 
 
     override fun onItemClicked(team: team) {
-        val intent = Intent(this,team_editor::class.java)
-        intent.putExtra("regionName",team.region_name)
-        intent.putExtra("teamID",team.teamID)
-        intent.putExtra("teamName",team.name)
+        val intent = Intent(this, team_editor::class.java)
+        intent.putExtra("regionName", team.region_name)
+        intent.putExtra("teamID", team.teamID)
+        intent.putExtra("teamName", team.name)
         startActivity(intent)
 
     }

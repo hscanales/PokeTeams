@@ -5,20 +5,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import us.vslt.poketeam.data.Model.Pokemon
-import us.vslt.poketeam.data.Model.PokemonDataRegion
 import us.vslt.poketeam.data.Model.Pokemon_Regional
 
 @Dao
 interface regionExtendedDAO {
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
-    suspend fun insertPokemonRegion(data : Pokemon_Regional)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPokemonRegion(data: Pokemon_Regional)
 
-    @Query( "DELETE FROM poke_regional")
+    @Query("DELETE FROM poke_regional")
     suspend fun nukePokemons()
 
     @Query("SELECT * FROM poke_regional")
-    fun getpokemonfromregion() : LiveData<List<Pokemon_Regional>>
+    fun getpokemonfromregion(): LiveData<List<Pokemon_Regional>>
 
 }

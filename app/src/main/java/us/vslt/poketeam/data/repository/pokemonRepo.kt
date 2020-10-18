@@ -10,19 +10,21 @@ import us.vslt.poketeam.data.Model.Pokemon
 import us.vslt.poketeam.service.retrofit
 
 class pokemonRepo(val pokemonDao: pokemonDAO, val retrofitInstance: retrofit) {
-    fun getPokemon(name : String) : Deferred<Response<Pokemon>>{return retrofitInstance.getPokemonByName(name)}
-
-    @WorkerThread
-    suspend fun insert(pokemon: Pokemon){
-     pokemonDao.insert(pokemon)
+    fun getPokemon(name: String): Deferred<Response<Pokemon>> {
+        return retrofitInstance.getPokemonByName(name)
     }
 
-    fun getTodos() : LiveData<List<Pokemon>> {
+    @WorkerThread
+    suspend fun insert(pokemon: Pokemon) {
+        pokemonDao.insert(pokemon)
+    }
+
+    fun getTodos(): LiveData<List<Pokemon>> {
         Log.d("Lista", pokemonDao.getAll().value.toString())
         return pokemonDao.getAll()
     }
 
     @WorkerThread
-    suspend fun  nuke() = pokemonDao.nuke()
+    suspend fun nuke() = pokemonDao.nuke()
 
 }

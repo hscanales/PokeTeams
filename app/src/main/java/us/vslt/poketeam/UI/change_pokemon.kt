@@ -1,14 +1,11 @@
 package us.vslt.poketeam.UI
 
-import android.graphics.Region
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -21,16 +18,16 @@ import us.vslt.poketeam.data.Model.*
 import us.vslt.poketeam.data.ViewModel.RegionExtendedViewModel
 import java.lang.reflect.Type
 
-class change_pokemon : AppCompatActivity(), OnItemClickListenerRegion{
+class change_pokemon : AppCompatActivity(), OnItemClickListenerRegion {
 
-    lateinit var RegionExtendedVM : RegionExtendedViewModel
-    lateinit var  RegionExtendedAdapter : RegionExtendedAdapter
+    lateinit var RegionExtendedVM: RegionExtendedViewModel
+    lateinit var RegionExtendedAdapter: RegionExtendedAdapter
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
-    lateinit var  teamid : String
-    lateinit var teamActual : MutableList<Pokemon>
-    lateinit var pkToChange : String
-    lateinit var regionName : String
+    lateinit var teamid: String
+    lateinit var teamActual: MutableList<Pokemon>
+    lateinit var pkToChange: String
+    lateinit var regionName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_pokemon)
@@ -40,18 +37,18 @@ class change_pokemon : AppCompatActivity(), OnItemClickListenerRegion{
         pkToChange = intent.getStringExtra("pokemon_to_change")!!
         regionName = intent.getStringExtra("region")!!
         var listType: Type? = object : TypeToken<List<Pokemon?>?>() {}.type
-        teamActual = Gson().fromJson(data,listType)
+        teamActual = Gson().fromJson(data, listType)
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().getReference("users")
-        binder(regionName!!)
+        binder(regionName)
 
     }
 
-    fun binder(regionNames : String){
+    fun binder(regionNames: String) {
         RegionExtendedVM = ViewModelProviders.of(this).get(RegionExtendedViewModel::class.java)
         RegionExtendedVM.getPokemonsByRegion(regionNames)
         var lista = ArrayList<Pokemon_Regional>()
-        RegionExtendedAdapter = RegionExtendedAdapter(lista,this)
+        RegionExtendedAdapter = RegionExtendedAdapter(lista, this)
 
         region_pokemon_rv.apply {
             adapter = RegionExtendedAdapter
@@ -66,24 +63,24 @@ class change_pokemon : AppCompatActivity(), OnItemClickListenerRegion{
         RegionExtendedVM.getPokemonsByRegion(regionName)
     }
 
-    override fun onItemClicked(region: Pokemon_Regional, view : View) {
+    override fun onItemClicked(region: Pokemon_Regional, view: View) {
         val ref = database.child(auth.currentUser!!.uid)
-        var miembros : MutableList<PokemonDataRegion> = mutableListOf()
-        teamActual.forEach(){
-            if(it.uuid==pkToChange){
+        var miembros: MutableList<PokemonDataRegion> = mutableListOf()
+        teamActual.forEach {
+            if (it.uuid == pkToChange) {
                 it.name = region.name
             }
             miembros.add(PokemonDataRegion(it.name))
         }
 
-        var newteam = team("",regionName,miembros,teamid,true)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        var newteam = team("", regionName, miembros, teamid, true)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user = snapshot.getValue(User::class.java)
-                user?.teams?.forEach(){
-                    if(teamid == it.teamID){
-                        it.apply{
-                          this.members = newteam.members
+                user?.teams?.forEach {
+                    if (teamid == it.teamID) {
+                        it.apply {
+                            this.members = newteam.members
                         }
                     }
                 }

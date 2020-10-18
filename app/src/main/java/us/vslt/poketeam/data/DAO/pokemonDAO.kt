@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import us.vslt.poketeam.data.Model.Pokemon
-import us.vslt.poketeam.data.Model.region
 
 @Dao
 interface pokemonDAO {

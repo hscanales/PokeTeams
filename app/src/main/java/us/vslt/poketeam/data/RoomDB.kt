@@ -10,18 +10,23 @@ import us.vslt.poketeam.data.DAO.regionDAO
 import us.vslt.poketeam.data.DAO.regionExtendedDAO
 import us.vslt.poketeam.data.Model.*
 
-@Database(entities = [region::class,PokemonDataRegion::class,Pokemon::class,Pokemon_Regional::class],version = 7,exportSchema = false)
-@TypeConverters(SpriteConverter::class,pokeTypeConverter::class,pokeTypeConverter::class)
-abstract class RoomDB: RoomDatabase() {
+@Database(
+    entities = [region::class, PokemonDataRegion::class, Pokemon::class, Pokemon_Regional::class],
+    version = 7,
+    exportSchema = false
+)
+@TypeConverters(SpriteConverter::class, pokeTypeConverter::class, pokeTypeConverter::class)
+abstract class RoomDB : RoomDatabase() {
 
     abstract fun regionDao(): regionDAO
     abstract fun pokemonDAO(): pokemonDAO
-    abstract fun regionExtendedDAO() : regionExtendedDAO
-    companion object{
-        @Volatile
-        private  var INSTANCE : RoomDB? = null
+    abstract fun regionExtendedDAO(): regionExtendedDAO
 
-        fun getInstance(context: Context):RoomDB{
+    companion object {
+        @Volatile
+        private var INSTANCE: RoomDB? = null
+
+        fun getInstance(context: Context): RoomDB {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -31,7 +36,7 @@ abstract class RoomDB: RoomDatabase() {
                     .databaseBuilder(context, RoomDB::class.java, "poketeams_Database")
                     .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE=instance
+                INSTANCE = instance
                 return instance
             }
         }

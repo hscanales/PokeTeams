@@ -3,19 +3,14 @@ package us.vslt.poketeam
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Region
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -27,12 +22,12 @@ import us.vslt.poketeam.adapters.OnItemClickListener
 import us.vslt.poketeam.adapters.RegionAdapter
 import us.vslt.poketeam.data.Model.region
 import us.vslt.poketeam.data.ViewModel.regionViewModel
-import java.util.ArrayList
+import java.util.*
 
 
 class RegionesActivity : AppCompatActivity(), OnItemClickListener {
     lateinit var drawerLayout: DrawerLayout
-    lateinit var regionAdapter : RegionAdapter
+    lateinit var regionAdapter: RegionAdapter
     lateinit var RegionVM: regionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,27 +40,27 @@ class RegionesActivity : AppCompatActivity(), OnItemClickListener {
         binder()
     }
 
-    fun binder(){
-        regionAdapter = RegionAdapter(ArrayList(),this)
+    fun binder() {
+        regionAdapter = RegionAdapter(ArrayList(), this)
         RegionVM = ViewModelProviders.of(this).get(regionViewModel::class.java)
-       val colum = if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-             2
-        }else{
-             3
+        val colum = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            2
+        } else {
+            3
         }
         region_recycler.apply {
 
             adapter = this@RegionesActivity.regionAdapter
 
-            layoutManager = GridLayoutManager(this@RegionesActivity,colum)
+            layoutManager = GridLayoutManager(this@RegionesActivity, colum)
         }
-        RegionVM.todos().observe(this, Observer {
+        RegionVM.todos().observe(this, {
             regionAdapter.updateList(it)
         })
 
         RegionVM.getRegions()
 
-        sign_out_button.setOnClickListener{
+        sign_out_button.setOnClickListener {
             startActivity(MainActivity.getLaunchIntent(this))
             FirebaseAuth.getInstance().signOut()
             var mGoogleSignInClient: GoogleSignInClient
@@ -79,7 +74,13 @@ class RegionesActivity : AppCompatActivity(), OnItemClickListener {
             finish()
         }
 
-        val toggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+        val toggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        ) {
             override fun onDrawerClosed(drawerView: View) {
                 // Triggered once the drawer closes
                 super.onDrawerClosed(drawerView)
@@ -112,8 +113,6 @@ class RegionesActivity : AppCompatActivity(), OnItemClickListener {
     }
 
 
-
-
     companion object {
         fun getLaunchIntent(from: Context) = Intent(from, RegionesActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -121,8 +120,8 @@ class RegionesActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClicked(region: region) {
-        val intent = Intent(this@RegionesActivity,team_manager::class.java)
-        intent.putExtra("region",region.region_name)
+        val intent = Intent(this@RegionesActivity, team_manager::class.java)
+        intent.putExtra("region", region.region_name)
         startActivity(intent)
 
     }

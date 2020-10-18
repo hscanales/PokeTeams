@@ -10,9 +10,10 @@ import us.vslt.poketeam.data.RoomDB
 import us.vslt.poketeam.data.repository.regionRepo
 import us.vslt.poketeam.service.retrofit
 
-class regionViewModel(private val app: Application): AndroidViewModel(app){
+class regionViewModel(private val app: Application) : AndroidViewModel(app) {
 
-    private val repository : regionRepo
+    private val repository: regionRepo
+
     init {
         val regionDAO = RoomDB.getInstance(app).regionDao()
         repository = regionRepo(regionDAO, retrofit.getRetrofitInstance())
@@ -20,23 +21,21 @@ class regionViewModel(private val app: Application): AndroidViewModel(app){
 
     private suspend fun insert(region: region) = repository.insert(region)
 
-    private  suspend fun nuke() = repository.nuke()
+    private suspend fun nuke() = repository.nuke()
 
-    fun todos() : LiveData<List<region>> = repository.todos()
+    fun todos(): LiveData<List<region>> = repository.todos()
 
     fun getRegions() = viewModelScope.launch {
         this@regionViewModel.nuke()
         val response = repository.getRegions().await()
 
 
-        if(response.isSuccessful)with(response){
-            this.body()?.lista?.forEach{
+        if (response.isSuccessful) with(response) {
+            this.body()?.lista?.forEach {
                 this@regionViewModel.insert(it)
             }
         }
     }
-
-
 
 
 }
