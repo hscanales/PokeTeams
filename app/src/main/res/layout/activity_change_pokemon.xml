@@ -24,18 +24,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/update_pkl_team_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fui_button_text_save" />
-
-    </LinearLayout>
-
 </LinearLayout>

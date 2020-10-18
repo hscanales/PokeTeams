@@ -7,15 +7,16 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import us.vslt.poketeam.data.DAO.pokemonDAO
 import us.vslt.poketeam.data.DAO.regionDAO
+import us.vslt.poketeam.data.DAO.regionExtendedDAO
 import us.vslt.poketeam.data.Model.*
 
-@Database(entities = [region::class,PokemonDataRegion::class,Pokemon::class],version = 5,exportSchema = false)
+@Database(entities = [region::class,PokemonDataRegion::class,Pokemon::class,Pokemon_Regional::class],version = 7,exportSchema = false)
 @TypeConverters(SpriteConverter::class,pokeTypeConverter::class,pokeTypeConverter::class)
 abstract class RoomDB: RoomDatabase() {
 
     abstract fun regionDao(): regionDAO
     abstract fun pokemonDAO(): pokemonDAO
-
+    abstract fun regionExtendedDAO() : regionExtendedDAO
     companion object{
         @Volatile
         private  var INSTANCE : RoomDB? = null

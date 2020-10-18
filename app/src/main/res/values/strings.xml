@@ -33,6 +33,7 @@
     <string name="submit">submit</string>
     <string name="delete">delete</string>
     <string name="delete_team">Delete Team</string>
+    <string name="welcome_to_poketeams">Welcome to PokeTeams</string>
 
 
 </resources>

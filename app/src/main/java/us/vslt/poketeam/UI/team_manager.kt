@@ -67,7 +67,7 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                                 PokemonDataRegion("ditto"),
                                 PokemonDataRegion("ditto")
                             ),
-                            java.util.UUID.randomUUID().toString()
+                            java.util.UUID.randomUUID().toString(), true
                         )
                         val lista = mutableListOf<team>(newTeam)
                         user = User(auth.currentUser!!.uid,lista)
@@ -82,7 +82,7 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                                 PokemonDataRegion("ditto"),
                                 PokemonDataRegion("ditto")
                             ),
-                            java.util.UUID.randomUUID().toString()
+                            java.util.UUID.randomUUID().toString(),true
                         )
                         user?.teams?.add(newTeam)
                         database.child(auth.currentUser!!.uid).setValue(user)
@@ -109,9 +109,10 @@ class team_manager : AppCompatActivity(), teamOnClickListener {
                     var ids = ArrayList<String>()
                     teams.clear()
                     user?.teams?.forEach {
-                        ids.add(it.teamID.toString())
-                        if (it.region_name.toString() == region_name)
-                            teams.add(it)
+                        if (it.region_name.toString() == region_name) {
+                            if(it.active!!){
+                                teams.add(it)}
+                        }
                     }
                     adapter = teamAdapter(teams, this@team_manager)
                     userVM = ViewModelProviders.of(this@team_manager).get(teamViewModel::class.java)

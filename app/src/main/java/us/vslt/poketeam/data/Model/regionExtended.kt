@@ -27,8 +27,15 @@ data class  Pokedex(
 )
 
 
+data class Pokedex_Entry(
+    @field:Json(name="name")
+    val name: String,
+    @field:Json(name="url")
+    val url : String
+)
+
 data class regionExtended (
-    val pokedexes : List<Pokedex>,
+    val pokedexes : List<Pokedex_Entry>,
     val name : String,
     val id: Int,
 )

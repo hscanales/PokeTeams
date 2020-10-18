@@ -26,8 +26,6 @@ class regionRepo(private val regionDAO : regionDAO, private  val retrofit: retro
     @WorkerThread
     suspend fun nuke() = regionDAO.nuke()
 
-    @WorkerThread
-    suspend fun  nukePokemons() = regionDAO.nukePokemons()
 
-    fun getPokemonsByRegion(name: String) : Deferred<Response<regionExtended>>{ return retrofit.getRegionByName(name)}
+
 }

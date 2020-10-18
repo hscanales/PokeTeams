@@ -31,9 +31,9 @@ class teamDetalVM(private val app: Application): AndroidViewModel(app){
 
         for (pokemonDataRegion in lista) {
             val response = repository.getPokemon(pokemonDataRegion.pokemon_name).await()
-            Log.d("Lista_name",pokemonDataRegion.pokemon_name)
+
             if(response.isSuccessful) with(response){
-                Log.d("Lista",this.body()!!.name)
+
                 this@teamDetalVM.insert( this.body()!! )
             }
 

@@ -1,5 +1,6 @@
 package us.vslt.poketeam.UI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_team_editor.*
 import kotlinx.android.synthetic.main.activity_team_manager.*
 import us.vslt.poketeam.R
@@ -45,9 +47,6 @@ class team_editor : AppCompatActivity() , teamDetailOnClickListener{
     }
 
     private fun binder(teamid: String, regionName: String,teamNames : String) {
-
-
-
 
         val fab : View = findViewById(R.id.fab_new_pokemon)
         fab.setOnClickListener(){
@@ -142,9 +141,35 @@ class team_editor : AppCompatActivity() , teamDetailOnClickListener{
 
             })
         }
+        delete_team_btn.setOnClickListener(){
+
+            ref.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = snapshot.getValue(User::class.java)
+                    user?.teams?.forEach{
+                        if(it.teamID==teamid){
+                            it.active = false
+                        }
+                    }
+                    ref.setValue(user)
+                    finish()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
     }
 
     override fun onItemClicked(poke: Pokemon) {
-        
+
+        val intent = Intent(this, change_pokemon::class.java )
+        intent.putExtra("teamid",teamid)
+        intent.putExtra("pokemon_to_change", poke.uuid)
+        intent.putExtra("current_team",Gson().toJson(adapter.pokemons))
+        intent.putExtra("region",regionName)
+        startActivity(intent)
+
     }
 }

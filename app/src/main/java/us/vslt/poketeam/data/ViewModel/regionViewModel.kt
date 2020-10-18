@@ -36,13 +36,7 @@ class regionViewModel(private val app: Application): AndroidViewModel(app){
         }
     }
 
-    private suspend fun nukePokemons() = repository.nukePokemons()
 
-    fun getRegion(name: String) = viewModelScope.launch {
-        this@regionViewModel.nukePokemons()
-        val response = repository.getPokemonsByRegion(name).await()
-
-    }
 
 
 }

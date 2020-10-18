@@ -36,6 +36,37 @@ data class Pokemon(
     }
 }
 
+@Entity(tableName = "poke_regional")
+data class Pokemon_Regional(
+
+    @field:Json(name = "name")
+    var name : String,
+    @field:Json(name = "id")
+    @PrimaryKey
+    var id : Int,
+    @field:Json(name= "sprites")
+    @TypeConverters(SpriteConverter::class)
+    var sprites : Sprites,
+    var uuid : String
+
+
+){
+
+    constructor() : this("",-1,Sprites(),""){
+        this.uuid = java.util.UUID.randomUUID().toString()
+    }
+
+    fun toMap() : Map<String,Any?>{
+        return mapOf(
+            "name" to name,
+            "id" to id,
+            "sprites" to sprites,
+
+            )
+
+    }
+}
+
 data class pokeTypes(
     @field:Json(name="type")
     @TypeConverters(pokeTypeConverter::class)

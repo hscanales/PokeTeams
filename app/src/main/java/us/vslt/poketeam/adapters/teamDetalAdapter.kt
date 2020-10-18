@@ -19,7 +19,9 @@ class teamDetalAdapter(var pokemons : List<Pokemon>, val listener: teamDetailOnC
             this.poke_number.text = poke.id.toString()
 
             Glide.with(this).load(poke.sprites.front_default).override(60,60).into(imageView3)
-
+            this.setOnClickListener{
+                listener.onItemClicked(poke)
+            }
 
         }
 
